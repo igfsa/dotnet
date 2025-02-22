@@ -1,0 +1,1 @@
+Pasta para armazernar os arquivos relativos � domain models

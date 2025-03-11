@@ -30,6 +30,7 @@ namespace WebApp.Controllers
         {
             try
             {
+                // throw new Exception();
                 var categorias = _context.Categorias.AsNoTracking().Take(10).ToList();
                 
                 if (categorias is null) 
@@ -93,8 +94,9 @@ namespace WebApp.Controllers
             if(id != categoria.CategoriaId)
                 return BadRequest();
             
-
             _context.Entry(categoria).State = EntityState.Modified; 
+
+            _context.SaveChanges();
 
             return Ok(categoria);
 

@@ -31,15 +31,22 @@ namespace WebApp.Controllers
         // uma mensagem de NotFound
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = _context.Produtos.AsNoTracking().Take(10).ToList();
-            // Por padrão o ambiente da WebApi faz as consultas de forma rastreada, mapeando as entidades e armazenando em cache. Este recurso é muito pesado
-            // Para consultas que não serão manipulados dados, uma vez que não é necessário visualizar o estado da aplicação, pode-se desativar 
-            // o rastreamento através de AsNoTracking
-            if (produtos is null) 
+            try
             {
-                return NotFound();
+                var produtos = _context.Produtos.AsNoTracking().Take(10).ToList();
+                // Por padrão o ambiente da WebApi faz as consultas de forma rastreada, mapeando as entidades e armazenando em cache. Este recurso é muito pesado
+                // Para consultas que não serão manipulados dados, uma vez que não é necessário visualizar o estado da aplicação, pode-se desativar 
+                // o rastreamento através de AsNoTracking
+                if (produtos is null) 
+                {
+                    return NotFound();
+                }
+                return produtos;
             }
-            return produtos;
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno desconhecido");
+            }
         }
 
         // GET api/<ValuesController>/5
@@ -49,12 +56,19 @@ namespace WebApp.Controllers
 
         public ActionResult<Produto> Get(int id)
         {
-            var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
-            if (produto is null) 
+            try
             {
-                return NotFound();
+                var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
+                if (produto is null) 
+                {
+                    return NotFound();
+                }
+                return produto;
             }
-            return produto;
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno desconhecido");
+            }
         }
 
 

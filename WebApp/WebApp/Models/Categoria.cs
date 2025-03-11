@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace WebApp.Models
 {
@@ -31,7 +30,6 @@ namespace WebApp.Models
          * StringLength permite informar também o valor mínimo, assim funcionando para validação de campo
         */
 
-        [JsonIgnore] 
         public ICollection<Produto> Produtos { get; set; }
         // Ao definir uma coleção de produtos dentro de uma categoria, indicamos uma relação de um para muitos entre as entidades produtos e categorias
     }
